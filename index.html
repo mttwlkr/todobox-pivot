@@ -3,8 +3,9 @@
   <head>
     <title>Idea Box</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
   </head>
   <body>
 
@@ -12,24 +13,24 @@
     <section class="section-top">
       <div class="container">
         <form id="form" role="form">
-          <h1>Item Box</h1>
+          <h1><span class="logo-idea">idea</span><span class="logo-box">box</span></h1>
           <input id="title" type="text" placeholder="Title" aria-label="Input title">
           <input id="body" type="text" placeholder="Body" aria-label="Input body">
-          <input type="submit" id="submit" value="Save" disabled="true">
+          <input type="submit" id="submit" value="save" disabled="true">
         </form>
       </div>
     </section>
 
 
     <section class="section-bottom">
+      <input id="search" type="text" placeholder="Search" aria-label="Search field">
       <article>
-        <input id="search" type="text" placeholder="Search" aria-label="Search field">
-        <h2 class="idea-title">Example Idea</h2>
-        <button class="idea-delete" value="X"></button>
-        <p class="idea-body">This is a description of my new idea.</p>
-        <button class="idea-up"><img alternate="up"></button>
-        <button class="idea-down"><img alternate="down"></button>
-        <h3 class="idea-quality-heading">quality: </h3><a class="idea-quality-value">swill</a>
+        <h2 class="idea-title">Example Idea 1</h2>
+        <input type="image" src="images/delete.svg" class="idea-delete" value="X">
+        <p class="idea-body">Tiramisu carrot cake fruitcake gingeread bear claw powder icing tootsie roll ice cream</p>
+        <input type="image" src="images/upvote.svg" class="idea-up">
+        <input type="image" src="images/downvote.svg" class="idea-down">
+        <h3 class="idea-quality-heading">quality: <a class="idea-quality-value">swill</a></h3>
         <hr>
       </article>
     </section>
