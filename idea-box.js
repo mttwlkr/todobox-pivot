@@ -1,59 +1,59 @@
 /*Global variables*/
 var $titleInput = $('#title').val();
 var $bodyInput = $('#body').val();
-var $inputFields = ['$titleInput, $bodyInput'];
+var $inputFields = ['#title, #body'];
 var $submitButton = $('#submit');
 var $searchInput = $('#search');
 var $titleElement = $('.idea-title');
 var $bodyElement = $('.idea-body');
-var $ideaTextElements = ['$titleElement, $bodyElement'];
+var $ideaTextElements = ['.idea-title, .idea-body'];
 var $deleteButton = $('.idea-delete');
 var $voteUpButton = $('.idea-up');
 var $voteDownButton = $('.idea-down');
 
 /*On load statements*/
-$titleInput.focus();
+$('#title').focus();
 
 /*Event Listeners*/
-$inputFields.on('keyup', function() {
+$('#title, #body').on('keyUp', function() {
   console.log('toggle button disabled');
   toggleButtonDisabled();
 })
 
-$submitButton.on('click', function(event) {
+$('#submit').on('click', function(event) {
   event.preventDefault;
   prependIdeasToList ();
 
 })
 
-$searchInput.on('keyup', function() {
+$('#search').on('keyup', function() {
 
 })
 
-$ideaTextElements.on('click', function() {
+$('.idea-body, .idea-body').on('click', function() {
 
 })
 
-$deleteButton.on('click', function() {
+$('.idea-delete').on('click', function() {
 
 })
 
-$voteUpButton.on('click', function() {
+$('.idea-up').on('click', function() {
 
 })
 
-$voteDownButton.on('click', function() {
+$('.idea-down').on('click', function() {
   
 })
 
 /*Functions*/
 
 function toggleButtonDisabled() {
-  if () {
+//   if () {
 
-    } else {
+//     } else {
 
-    }
+//     }
   }
 ;
 
