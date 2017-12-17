@@ -74,15 +74,15 @@ function toggleButtonDisabled() {
 
 
 function prependIdeasToList() {
-  var $titleInput = $('#title').val();
-  var $bodyInput = $('#body').val();
+  var titleInput = $('#title').val();
+  var bodyInput = $('#body').val();
   // event.preventDefault();
   // the variables below don't work, but they pass
   $('.section-bottom').prepend(`
     <article>
-        <h2 class="idea-title"> ${'titleInput'} 1</h2>
+        <h2 class="idea-title"> ${titleInput} 1</h2>
         <input type="image" src="images/delete.svg" class="idea-delete" value="X">
-        <p class="idea-body">${'bodyInput'}</p>
+        <p class="idea-body">${bodyInput}</p>
         <input type="image" src="images/upvote.svg" class="idea-up">
         <input type="image" src="images/downvote.svg" class="idea-down">
         <h3 class="idea-quality-heading">quality: <a class="idea-quality-value">swill</a></h3>
