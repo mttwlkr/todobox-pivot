@@ -8,8 +8,8 @@ var ideaTextElements = ('.idea-title, .idea-body');
 var deleteButton = $('.idea-delete');
 var voteUpButton = $('.idea-up');
 var voteDownButton = $('.idea-down');
-
 var bottomSection = $('.section-bottom');
+$(submitButton).prop('disabled', true);
 
 /*On load statements*/
 $('#title').focus();
@@ -37,14 +37,21 @@ $(searchInput).on('keyup', function() {
 })
 
 // this listener works
-$(bottomSection).on('click', ideaTextElements, function () {
-  console.log('idea clicked');
-
-})
+$(bottomSection).on('click', ideaTextElements, function() {
+  // console.log('idea clicked');
+  // editIdeaText();
+  $(this).attr('contenteditable','true');
+  $(this).keypress(function(event) {
+    if(event.which == 13) {
+        $(this).blur();
+    };
+  });
+});
 
 // this listener works
 $(bottomSection).on('click', '.idea-delete', function () {
   console.log('delete clicked');
+  $(this).parent('article').remove();
 
 })
 
@@ -63,13 +70,22 @@ $(bottomSection).on('click', '.idea-down', function () {
 /*Functions*/
 
 function toggleButtonDisabled() {
-  if ($('#title').val() === '' && $('#body').val() === '') {
-    $('.enable-button').prop('disabled', true);
-    } else if ($('title').val() ==='' || $('#body').val() === '') {
-    $('enable-button').prop('disabled', true);
-  } else {    
-    $('.enable-button').prop('disabled', false);
+  if($('#title').val() && $('#body').val()) {
+    console.log('enable');
+    $(submitButton).prop('disabled', false);
+  } else {
+    console.log('disable');
+    $(submitButton).prop('disabled', true);
   }
+
+
+  // if ($('#title').val() === '' && $('#body').val() === '') {
+  //   $('.enable-button').prop('disabled', true);
+  //   } else if ($('title').val() ==='' || $('#body').val() === '') {
+  //   $('enable-button').prop('disabled', true);
+  // } else {    
+  //   $('.enable-button').prop('disabled', false);
+  // }
 };
  
 
@@ -90,4 +106,13 @@ function prependIdeasToList() {
         <hr>
     </article>   
 `)
+};
+
+function editIdeaText() {
+  $(this).attr('contenteditable','true');
+  $(this).keypress(function(event) {
+    if(event.which == 13) {
+        $(this).blur();
+    };
+  });
 };
