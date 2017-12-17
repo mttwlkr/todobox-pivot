@@ -1,48 +1,62 @@
 /*Global variables*/
-var $inputFields = ['#title, #body'];
-var $submitButton = $('#submit');
-var $searchInput = $('#search');
+var inputFields = ('#title, #body');
+var submitButton = $('#submit');
+var searchInput = $('#search');
 var $titleElement = $('.idea-title');
 var $bodyElement = $('.idea-body');
-var $ideaTextElements = ['.idea-title, .idea-body'];
-var $deleteButton = $('.idea-delete');
-var $voteUpButton = $('.idea-up');
-var $voteDownButton = $('.idea-down');
+var ideaTextElements = ('.idea-title, .idea-body');
+var deleteButton = $('.idea-delete');
+var voteUpButton = $('.idea-up');
+var voteDownButton = $('.idea-down');
+
+var bottomSection = $('.section-bottom');
 
 /*On load statements*/
 $('#title').focus();
 
 /*Event Listeners*/
-$('#title, #body').on('keyUp', function() {
+
+// this listener works
+$(inputFields).on('keyup', function() {
   console.log('toggle button disabled');
   toggleButtonDisabled();
 })
 
-$('#submit').on('click', function(event) { 
+// this listener works
+$(submitButton).on('click', function(event) { 
   event.preventDefault();
   console.log(2);
   prependIdeasToList();
 
 })
 
-$('#search').on('keyup', function() {
+// this listener works
+$(searchInput).on('keyup', function() {
+  console.log('search clicked');
+})
+
+// this listener works
+$(bottomSection).on('click', ideaTextElements, function () {
+  console.log('idea clicked');
 
 })
 
-$('.idea-body, .idea-body').on('click', function() {
+// this listener works
+$(bottomSection).on('click', '.idea-delete', function () {
+  console.log('delete clicked');
 
 })
 
-$('.idea-delete').on('click', function() {
+// this listener works
+$(bottomSection).on('click', '.idea-up', function () {
+  console.log('vote up clicked');
 
 })
 
-$('.idea-up').on('click', function() {
+// this listener works
+$(bottomSection).on('click', '.idea-down', function () {
+    console.log('vote down clicked');
 
-})
-
-$('.idea-down').on('click', function() {
-  
 })
 
 /*Functions*/
