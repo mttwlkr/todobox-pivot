@@ -36,10 +36,16 @@ $(searchInput).on('keyup', function() {
 })
 
 // this listener works
-$(bottomSection).on('click', ideaTextElements, function () {
-  console.log('idea clicked');
-
-})
+$(bottomSection).on('click', ideaTextElements, function() {
+  // console.log('idea clicked');
+  // editIdeaText();
+  $(this).attr('contenteditable','true');
+  $(this).keypress(function(event) {
+    if(event.which == 13) {
+        $(this).blur();
+    };
+  });
+});
 
 // this listener works
 $(bottomSection).on('click', '.idea-delete', function () {
@@ -99,4 +105,13 @@ function prependIdeasToList() {
         <hr>
     </article>   
 `)
+};
+
+function editIdeaText() {
+  $(this).attr('contenteditable','true');
+  $(this).keypress(function(event) {
+    if(event.which == 13) {
+        $(this).blur();
+    };
+  });
 };
