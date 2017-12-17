@@ -1,6 +1,4 @@
 /*Global variables*/
-var $titleInput = $('#title').val();
-var $bodyInput = $('#body').val();
 var $inputFields = ['#title, #body'];
 var $submitButton = $('#submit');
 var $searchInput = $('#search');
@@ -20,8 +18,9 @@ $('#title, #body').on('keyUp', function() {
   toggleButtonDisabled();
 })
 
-$('#submit').on('click', function(event) {
-  event.preventDefault;
+$('#submit').on('click', function(event) { 
+  event.preventDefault();
+  console.log(2);
   prependIdeasToList ();
 
 })
@@ -49,25 +48,30 @@ $('.idea-down').on('click', function() {
 /*Functions*/
 
 function toggleButtonDisabled() {
-//   if () {
-
-//     } else {
-
-//     }
+  if ($('#title').val() === '' && $('#body').val() === '') {
+    $('.enable-button').prop('disabled', true);
+    } else if ($('title').val() ==='' || $('#body').val() === '') {
+    $('enable-button').prop('disabled', true);
+  } else {    
+    $('.enable-button').prop('disabled', false);
   }
-;
+};
+ 
+
 
 function prependIdeasToList () {
-
+  var $titleInput = $('#title').val();
+  var $bodyInput = $('#body').val();
+  event.preventDefault();
   parent.prepend(`
     <article>
-        <h2 class="idea-title">${titleInput}</h2>
+        <h2 class="idea-title">${titleInput} 1</h2>
         <input type="image" src="images/delete.svg" class="idea-delete" value="X">
         <p class="idea-body">${bodyInput}</p>
         <input type="image" src="images/upvote.svg" class="idea-up">
         <input type="image" src="images/downvote.svg" class="idea-down">
         <h3 class="idea-quality-heading">quality: <a class="idea-quality-value">swill</a></h3>
         <hr>
-      </article>                                    
-`);
-}
+    </article>   
+`)
+};
