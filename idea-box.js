@@ -1,18 +1,23 @@
 /*Global variables*/
+var $inputTitle = $('#title');
+var $inputBody = $('#body');
 var inputFields = ('#title, #body');
 var submitButton = $('#submit');
 var searchInput = $('#search');
 var $titleElement = $('.idea-title');
 var $bodyElement = $('.idea-body');
 var ideaTextElements = ('.idea-title, .idea-body');
+var $ideaQualityElement = $('.idea-quality-value');
 var deleteButton = $('.idea-delete');
 var voteUpButton = $('.idea-up');
 var voteDownButton = $('.idea-down');
 var bottomSection = $('.section-bottom');
-$(submitButton).prop('disabled', true);
+var maxID = 0;
 
 /*On load statements*/
 $('#title').focus();
+$(submitButton).prop('disabled', true);
+
 
 /*Event Listeners*/
 
@@ -77,8 +82,6 @@ function toggleButtonDisabled() {
     console.log('disable');
     $(submitButton).prop('disabled', true);
   }
-
-
   // if ($('#title').val() === '' && $('#body').val() === '') {
   //   $('.enable-button').prop('disabled', true);
   //   } else if ($('title').val() ==='' || $('#body').val() === '') {
@@ -88,13 +91,12 @@ function toggleButtonDisabled() {
   // }
 };
  
-
-
 function prependIdeasToList() {
   var titleInput = $('#title').val();
   var bodyInput = $('#body').val();
-  // event.preventDefault();
-  // the variables below don't work, but they pass
+  var ideaQualityValue = 1;
+  setNewIdea();
+  console.log(maxID);
   $('.section-bottom').prepend(`
     <article>
         <h2 class="idea-title"> ${titleInput} 1</h2>
@@ -102,10 +104,11 @@ function prependIdeasToList() {
         <p class="idea-body">${bodyInput}</p>
         <input type="image" src="images/upvote.svg" class="idea-up">
         <input type="image" src="images/downvote.svg" class="idea-down">
-        <h3 class="idea-quality-heading">quality: <a class="idea-quality-value">swill</a></h3>
+        <h3 class="idea-quality-heading">quality:  <a class="idea-quality-value">${ideaQualityValue}</a></h3>
         <hr>
     </article>   
 `)
+  $('#title').focus();
 };
 
 function editIdeaText() {
@@ -116,3 +119,18 @@ function editIdeaText() {
     };
   });
 };
+
+function setNewIdea() {
+  console.log('new idea function called');
+  maxID = maxID + 1;
+  console.log('max ID is currently ' + maxID)
+  var newIdeaObject = {
+    title: $inputTitle.val(),
+    body: $inputBody.val(),
+    quality: 1
+  }
+  var stringifiedNewIdeaObject = JSON.stringify(newIdeaObject);
+  localStorage.setItem(maxID, stringifiedNewIdeaObject);
+  localStorage.getItem(maxID);
+  console.log(localStorage.getItem(maxID));
+}
