@@ -27,8 +27,9 @@ $(submitButton).on('click', function(event) {
   event.preventDefault();
   console.log(2);
   prependIdeasToList();
+  $(inputFields).val('');
 
-})
+});
 
 // this listener works
 $(searchInput).on('keyup', function() {
