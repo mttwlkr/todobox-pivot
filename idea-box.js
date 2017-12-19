@@ -141,7 +141,7 @@ function prependIdeasToList() {
   setNewIdea();
   console.log(maxID);
   console.log('quality attribute is' + qualityAttributeValue);
-  $('.section-bottom').prepend(`
+  $('.prepend').prepend(`
     <article id = ` + maxID + ` quality = "1">
         <h2 class="idea-title">${titleInput}</h2>
         <input type="image" src="images/delete.svg" class="idea-delete" value="X">
@@ -156,24 +156,24 @@ function prependIdeasToList() {
   $('#title').focus();
 };
 
-function prependOnload() {
-//vars for each key
-storage.getItem.
+// function prependOnload() {
+// //vars for each key
+// storage.getItem.
 //var for entire local storage array
-var storage = localStorage
+//var storage = localStorage
 //for loop to run function for each item
 //prepend like above, use actual values
 //update id and quality attributes before continuing loop
-}
 
-function editIdeaText() {
-  $(this).attr('contenteditable','true');
-  $(this).keypress(function(event) {
-    if(event.which == 13) {
-        $(this).blur();
-    };
-  });
-};
+
+// function editIdeaText() {
+//   $(this).attr('contenteditable','true');
+//   $(this).keypress(function(event) {
+//     if(event.which == 13) {
+//         $(this).blur();
+//     };
+//   });
+// };
 
 function setNewIdea() {
   console.log('new idea function called');
