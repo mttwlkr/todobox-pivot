@@ -95,10 +95,11 @@ function prependIdeasToList() {
   var bodyInput = $('#body').val();
   // event.preventDefault();
   // the variables below don't work, but they pass
-  $('.section-bottom').prepend(`
+  
+  $('.prepend').prepend(`
     <article>
         <h2 class="idea-title"> ${titleInput} 1</h2>
-        <input type="image" src="images/delete.svg" class="idea-delete" value="X">
+        <input  class="idea-delete" value="X">
         <p class="idea-body">${bodyInput}</p>
         <input type="image" src="images/upvote.svg" class="idea-up">
         <input type="image" src="images/downvote.svg" class="idea-down">
@@ -116,3 +117,13 @@ function editIdeaText() {
     };
   });
 };
+
+// // var changeUp = function () {
+//   $('.idea-up').hover(function() {
+//       $('.idea-up').attr('src', 'images/upvote-hover.svg');
+//     }function() {
+//       $(.'idea-up').attr('src', 'images/upvote.svg');
+//     }
+
+//     })
+// }
