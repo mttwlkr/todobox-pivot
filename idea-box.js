@@ -30,10 +30,8 @@ $(inputFields).on('keyup', function() {
 // this listener and its function work
 $(submitButton).on('click', function(event) { 
   event.preventDefault();
-  console.log(2);
   prependIdeasToList();
   $(inputFields).val('');
-
 });
 
 // this listener works
@@ -51,7 +49,14 @@ $(bottomSection).on('click', ideaTextElements, function() {
       console.log('now I will take the new innerText and update local storage')
       var itemID = $(this).parent().attr('id');
       var quality = $(this).parent().attr('quality');
-
+  var qualityAttributeValue = 1;
+  setNewIdea();
+  console.log(maxID);
+  console.log('quality attribute is' + qualityAttributeValue);
+  $('.section-bottom').prepend(`
+    <article id = ` + maxID + ` quality = "1">
+        <h2 class="idea-title">${titleInput}</h2>
+        <input type="image" src="images/delete.svg" class="idea-delete" value="X">
 
 //normalize the rest of this in a named function so it can be used to udpate quality too
 //need to add if this is voteup or votedown to if statement
@@ -122,13 +127,6 @@ function toggleButtonDisabled() {
     console.log('disable');
     $(submitButton).prop('disabled', true);
   }
-  // if ($('#title').val() === '' && $('#body').val() === '') {
-  //   $('.enable-button').prop('disabled', true);
-  //   } else if ($('title').val() ==='' || $('#body').val() === '') {
-  //   $('enable-button').prop('disabled', true);
-  // } else {    
-  //   $('.enable-button').prop('disabled', false);
-  // }
 };
  
 function prependIdeasToList() {
@@ -138,10 +136,10 @@ function prependIdeasToList() {
   setNewIdea();
   console.log(maxID);
   console.log('quality attribute is' + qualityAttributeValue);
-  $('.section-bottom').prepend(`
-    <article id = ` + maxID + ` quality = "1">
-        <h2 class="idea-title">${titleInput}</h2>
-        <input type="image" src="images/delete.svg" class="idea-delete" value="X">
+  $('.prepend').prepend(`
+    <article>
+        <h2 class="idea-title"> ${titleInput} 1</h2>
+        <input type="image" class="idea-delete" value="X">
         <p class="idea-body">${bodyInput}</p>
         <input type="image" src="images/upvote.svg" class="idea-up">
         <input type="image" src="images/downvote.svg" class="idea-down">
@@ -161,6 +159,7 @@ function editIdeaText() {
     };
   });
 };
+
 
 function setNewIdea() {
   console.log('new idea function called');
