@@ -12,12 +12,34 @@ var deleteButton = $('.idea-delete');
 var voteUpButton = $('.idea-up');
 var voteDownButton = $('.idea-down');
 var bottomSection = $('.section-bottom');
-var maxID = 0;
+var maxID = localStorage.length;
 
 /*On load statements*/
-$('#title').focus();
-$(submitButton).prop('disabled', true);
+// $('#title').focus();
+// $(submitButton).prop('disabled', true);
 
+// function loadIdeas() {
+ for (i=0; i < localStorage.length; i++) {
+   var key = localStorage.key(i);
+   var item = JSON.parse(localStorage.getItem(key));
+   var id = item.id;
+   var title = item.title;
+   var body = item.body;
+   var quality = item.quality;
+      $('.prepend').prepend(`
+    <article id = "${id}" quality = "0">
+         <h2 class="idea-title">${title}</h2>
+         <input type="image" src="images/delete.svg" class="idea-delete" value="X">
+         <p class="idea-body">${body}</p>
+         <input type="image" src="images/upvote.svg" class="idea-up">
+         <input type="image" src="images/downvote.svg" class="idea-down">
+         <p class="idea-quality-value">${quality}</p>
+        <hr>
+    </article>   
+ `) 
+}
+ 
+// }
 
 /*Event Listeners*/
 
@@ -47,20 +69,25 @@ $(bottomSection).on('click', ideaTextElements, function() {
   // editIdeaText();
   $(this).attr('contenteditable','true');
   $(this).keypress(function(event) {
-    if(event.which == 13) {
-      console.log('now I will take the new innerText and update local storage')
+    if(event.which == 13){
+      setEditedText()
+  $(this).blur(function(){ 
+    console.log("shit");
+      setEditedText()
+console.log('what?');
+      })
+    }
+  })
+})
+
+
+function setEditedText() {
       var itemID = $(this).parent().attr('id');
       var quality = $(this).parent().attr('quality');
-
-
-//normalize the rest of this in a named function so it can be used to udpate quality too
-//need to add if this is voteup or votedown to if statement
       if ($(this).hasClass('idea-title')) {
-        // console.log('title');
         var $title = $(this).text();
         var $body = $(this).siblings('.idea-body').text();
       } else {
-        // console.log('body')
         var $title = $(this).siblings('.idea-title').text();
         var $body = $(this).text();
       }
@@ -75,45 +102,70 @@ $(bottomSection).on('click', ideaTextElements, function() {
       console.log(localStorage.getItem(itemID));
       $(this).blur();
     };
-  });
-});
 
 // this listener works, but need to add "remove from local storage" function
 $(bottomSection).on('click', '.idea-delete', function () {
-  console.log('delete clicked');
+  console.log('idea-delete');
   $(this).parent('article').remove();
-
+  // $(this).maxID().remove();
+  var key = $(this).parent().attr('id');
+  console.log(key);
+  localStorage.removeItem(key);
 })
 
-// this listener works; need to display updated quality and limit quality range
 $(bottomSection).on('click', '.idea-up', function () {
   console.log('vote up clicked');
   var quality = $(this).parent().attr('quality');
   console.log('old quality' + quality);
-  var quality = parseInt(quality) + 1;
+  if (quality < 2) {
+  quality = parseInt(quality) + 1;
   console.log('new quality' + quality);
   $(this).parent().attr('quality',quality);
-// add statement here to update quality on local storage
+  }
+      if(quality < 1){
+      $(this).siblings('.idea-quality-value').text('Quality: Swill');
+      console.log($(this).text());
+      console.log(quality);
+    } else if  
+      (quality == 1){
+      $(this).siblings('.idea-quality-value').text('Quality: Plausible');
+    } else if 
+      (quality > 1){
+      $(this).siblings('.idea-quality-value').text('Quality: Genius');
+      } else {
+      console.log('do shit')
+  } 
 
-    // WTF?  I just want update the text displayed for quality to show the new quality
-    // $(this).siblings('.idea-quality-value').text(quality);
-    // document.querySelector('span').nextSibling.textContent = quality;
-    // $(".idea-quality-value > i")[0].nextSibling.nodeValue = quality;
-    // $(this).closest('span').text(quality);
-    // $(this).siblings('span').text(quality);
-
+ // upAndDownChange(quality); 
 })
 
-// this listener works; need to display updated quality and limit quality range
 $(bottomSection).on('click', '.idea-down', function () {
     console.log('vote down clicked');
     var quality = $(this).parent().attr('quality');
     console.log('old quality' + quality);
-    var quality = parseInt(quality) - 1;
+    if (quality > 0){
+    quality = parseInt(quality) - 1;
     console.log('new quality' + quality);
     $(this).parent().attr('quality',quality);
-// add statement here to update quality on local storage    
-})
+//   }
+//     upAndDownChange(quality); 
+// })
+
+//     function upAndDownChange(quality) {
+    if(quality < 1){
+      $(this).siblings('.idea-quality-value').text('Quality: Swill');
+      console.log($(this).text());
+      console.log(quality);
+    } else if  
+      (quality == 1){
+      $(this).siblings('.idea-quality-value').text('Quality: Plausible');
+    } else if 
+      (quality > 1){
+      $(this).siblings('.idea-quality-value').text('Quality: Genius');
+      } else {
+      console.log('do shit')
+  } 
+ }})
 
 /*Functions*/
 
@@ -125,30 +177,22 @@ function toggleButtonDisabled() {
     console.log('disable');
     $(submitButton).prop('disabled', true);
   }
-  // if ($('#title').val() === '' && $('#body').val() === '') {
-  //   $('.enable-button').prop('disabled', true);
-  //   } else if ($('title').val() ==='' || $('#body').val() === '') {
-  //   $('enable-button').prop('disabled', true);
-  // } else {    
-  //   $('.enable-button').prop('disabled', false);
-  // }
 };
  
+
 function prependIdeasToList() {
   var titleInput = $('#title').val();
   var bodyInput = $('#body').val();
-  var qualityAttributeValue = 1;
   setNewIdea();
   console.log(maxID);
-  console.log('quality attribute is' + qualityAttributeValue);
   $('.prepend').prepend(`
-    <article id = ` + maxID + ` quality = "1">
+    <article id = ` + maxID + ` quality = "0">
         <h2 class="idea-title">${titleInput}</h2>
         <input type="image" src="images/delete.svg" class="idea-delete" value="X">
         <p class="idea-body">${bodyInput}</p>
         <input type="image" src="images/upvote.svg" class="idea-up">
         <input type="image" src="images/downvote.svg" class="idea-down">
-        <h3 class="idea-quality-heading">quality:  <span class="idea-quality-value">${qualityAttributeValue}</span></h3>
+        <h3 class="idea-quality-heading">quality:  <span class="idea-quality-value">Swill</span></h3>
         <hr>
     </article>   
 `)
@@ -156,28 +200,10 @@ function prependIdeasToList() {
   $('#title').focus();
 };
 
-// function prependOnload() {
-// //vars for each key
-// storage.getItem.
-//var for entire local storage array
-//var storage = localStorage
-//for loop to run function for each item
-//prepend like above, use actual values
-//update id and quality attributes before continuing loop
-
-
-// function editIdeaText() {
-//   $(this).attr('contenteditable','true');
-//   $(this).keypress(function(event) {
-//     if(event.which == 13) {
-//         $(this).blur();
-//     };
-//   });
-// };
 
 function setNewIdea() {
   console.log('new idea function called');
-  maxID = maxID + 1;
+  maxID ++;
   console.log('max ID is currently ' + maxID)
   var newIdeaObject = {
     id: maxID,
@@ -190,5 +216,5 @@ function setNewIdea() {
   localStorage.getItem(maxID);
   console.log(localStorage.getItem(maxID))
   console.log(stringifiedNewIdeaObject);
-}
+};
 
