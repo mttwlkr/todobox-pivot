@@ -13,38 +13,34 @@
   /*Top section of page*/
 
   .section-top{
-    display: block;
-    /*position: fixed;*/
-    /*display: table;*/
-    height: 40%;
-    width: 100%;
     background-color: #e5f3f2;
+    display: block;
     margin: auto;
+    min-width: 330px;
     text-align: center;
+    width: 100%;
   }  
 
   .container {
     display: block;
-    /*vertical-align: middle;*/
   }
 
   #form {
     display: inline-block;
     width: 60%;
-    /*margin: 1.5rem 0 0 0;*/
   }
 
    #search {
     display: inline-block;
-    width: 60%;
     margin-top: .75em;
+    width: 60%;
   }
 
   h1 {
     font-family: "Roboto Slab", serif;
     font-size: 5rem;
     font-weight: 700;
-    margin: 0 0 1rem 0;
+    margin: 15px 0 15px 0;
   }
 
   h1 .logo-idea {
@@ -61,76 +57,73 @@
 
 
   input {
+    border: 1px solid #939598;
     color: #939598;
-    width: 100%;
-    height: 3rem;
     font-size: 2rem;
+    font-weight: 600;
+    height: 3rem;
     margin: .5rem 0 0.5rem 0;
     padding: 1rem;
-    border: 1px solid #939598;
-    font-weight: 600;
+    width: 100%;
   }
 
   input::placeholder {
-    font-size: 2rem;
     color: #D1D2D4;
+    font-size: 2rem;
 
   }
 
   input[type="submit"]{
+    background-color: #00a79d;
     border: none;
     color: white;
-    background-color: #00a79d;
     font-size: 2rem;
+    font-weight: 400;
     letter-spacing: 1.5px;
     margin-bottom: 1.2rem;
     padding: 0rem;
-    font-weight: 400;
-    
   }
 
   .section-bottom {
-    /*position: absolute;*/
-    display: block;
-    /*top: 50%;*/
-    /*height: 60%;*/
-    width: 100%;
     background-color: #FFFFFF;
+    display: block;
     margin: auto;
+    min-width: 330px;
     text-align: center;
+    width: 100%;
   }
 
   article {
-    display: inline-block;
-    width: 60%;
-    font-size: 1.2rem;
     color: #939598;
+    display: inline-block;
+    font-size: 1.2rem;
     text-align: left;
+    width: 60%;
   }
 
   h2 {
+    color: #6D6E71;
     display: inline-block;
     font-family: "Roboto Slab", serif;
     font-size: 2rem;
-    color: #6D6E71;
-    margin: 2rem 0 0;
+    margin: 0;
   }
 
   input[type="image"] {
-    display: inline-block;
     border-style: none;
-    width: 2rem;
+    display: inline-block;
     height: 2rem;
     margin: 1rem 1rem 0 0;
+    width: 2rem;
 
   }
 
   /*input required here for specificty for right margin*/
   input.idea-delete {
+    bottom: 5px;
     float: right;
-    position: relative;
-    bottom: -1rem;
     margin-right: 0;
+    position: relative;
   }
 
   p.idea-body {
@@ -142,11 +135,11 @@
 
   .idea-delete {
     background-image: url("images/delete.svg");
-    height: 20px;
-    width: 20px;
+    background-repeat: no-repeat;
     border-radius: 20px;
     border: none;
-    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
   }
 
   .idea-delete:hover {
@@ -156,12 +149,12 @@
 
   .idea-up {
     background-image: url("images/upvote.svg");
-    height: 20px;
-    width: 20px;
+    background-repeat: no-repeat;
     border-radius: 20px;
     border: none;
+    height: 20px;
     margin-bottom: 0;
-    background-repeat: no-repeat;
+    width: 20px;
   }
 
 
@@ -172,11 +165,11 @@
 
   .idea-down {
     background-image: url("images/downvote.svg");
-    height: 20px;
-    width: 20px;
+    background-repeat: no-repeat;
     border-radius: 20px;
     border: none;
-    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
   }
 
   .idea-down:hover {
@@ -193,39 +186,33 @@
   }
 
   .idea-quality-value {
+    bottom: 10px;
     display: inline-block;
-    position: absolute;
-    bottom: 17%;
-    left: 90px;
-  }
-
-  .idea-quality-heading,
-  .idea-quality-value{
-    display: inline-block; 
-    position: absolute;
-    bottom: 17%;
+    position: relative;
   }
 
 
   h3 {
-    vertical-align: middle;
     display: inline-block;
     font-size: 1rem;
+    vertical-align: middle;
   }
 
 
 
 @media screen and (max-width: 720px) {
+  
+
   h1{
     font-size: 2.8rem;
-    margin: 0 0 .75rem 0;
+    margin: 10px 0 10px 0;
   }
 
   input {
-    height: 2.3rem;
     font-size: 1rem;
-    padding: 24px 0 14px 10px;
+    height: 2.3rem;
     margin-bottom: 4px; 
+    padding: 24px 0 14px 10px;
   }
 
   input::placeholder { 
@@ -241,7 +228,8 @@
   }
 
   #search {
-  margin-top: 15px;
+  margin: 15px 0 15px 0;
+
   }
 
   #title,
@@ -265,23 +253,23 @@
   } 
 }
 
+
+
+
 @media only screen and (max-width:320px) {
  
   .section-top{
     height: 249px;
-    width: 100%;
+    min-height: 49.5%;
     position: fixed;
     top: 0;
-    overflow: hidden;
-    float: left;
+    width: 100%;
     z-index: 1;
-    min-height: 50%;
   }
 
   .section-bottom {
     margin-top: 280px;
     z-index: 0;
-    max-height: 500px;
   }
 
   h1 {
@@ -298,13 +286,17 @@
   } 
 
   input::placeholder {
+    bottom: 60%;
     font-size: 20px;
     position: relative;
-    bottom: 60%;
   }
 
   input#body {
     height: 105px;
+  }
+
+  #search {
+    margin: top;
   }
 
   #form,
@@ -322,20 +314,22 @@
   #title,
   #search {
     height: 30px;
-
   }
 
   #title::placeholder,
   #search::placeholder {
+    bottom: 50%;
     font-size: 20px;
     position: relative;
-    bottom: 50%;
+  }
 
+   input[type="submit"]{
+    font-size: 20px;
   }
 
   #submit::placeholder {
-    position: relative;
     bottom:50%;
+    position: relative;
   }
 }
 
