@@ -10,17 +10,17 @@
   <body>
     <section class="section-top">
       <form id="form" role="form">
-        <h1>idea<span class="logo-box">box</span></h1>
-        <input id="title" type="text" placeholder="Title" aria-label="Input title">
-        <input id="body" type="textarea" placeholder="Body" aria-label="Input body">
-        <input type="submit" id="submit" class="enable-button" value="save" disabled="true">
+        <h1>2Do<span class="logo-box">Box</span></h1>
+        <input id="title" type="text" placeholder="Title" aria-label="to do title">
+        <input id="body" type="textarea" placeholder="Body" aria-label="to do body">
+        <input type="submit" id="submit" class="enable-button" value="save" disabled="true" aria-label="save to do">
       </form>
     </section>
-    <section class="section-bottom">
+    <section class="section-bottom" role="main">
       <div class="search-bar">
         <input id="search" type="text" placeholder="Search" aria-label="Search field">
       </div>
-      <div class="prepend"></div>
+      <div class="prepend" role="complimentary"></div>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
