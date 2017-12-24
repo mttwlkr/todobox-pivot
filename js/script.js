@@ -1,7 +1,9 @@
 var array = [{id:4, name: 'Importance: Critical'},{id:3, name: 'Importance: High'},
   {id:2, name: 'Importance: Normal'},{id:1, name: 'Importance: Low'},{id:0, name: 'Importance: None'}];
 
-loadCard();
+var completedArray = [{id:0, name: 'task-incomplete'}, {id: 1, name:'task-completed'}]
+
+pageLoadCard();
 $('#title').focus();
 $('#form').on('keyup', '#title, #task', enableSaveButton);
 $('#submit').on('click', createCard);
@@ -10,22 +12,54 @@ $('.section-bottom').on('blur', '.todo-task', updateTask);
 $('.section-bottom').on('click', '.todo-delete', deleteButton);
 $('.section-bottom').on('click', '.todo-up', upVote);
 $('.section-bottom').on('click', '.todo-down', downVote);
+$('.section-bottom').on('click', '.complete-button', taskComplete);
+$('.show-completed').on('click', showCompletedCards);
+$('.show-more-todo').on('click', loadMoreCards);
 $('#filter').on('keyup', filterCards);
 
-function loadCard() {
-  for (i=0; i < localStorage.length; i++) {
+function pageLoadCard() {
+  for (var i = localStorage.length - 10; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
-    var importanceDescription = importanceAdjust(cardObject, key);
-    prependCard(cardObject, importanceDescription);
+    if (cardObject.completed === 0){
+      var importanceDescription = importanceAdjust(cardObject, key);
+      var completedClass = completedAdjust(cardObject, key);
+      prependCard(cardObject, importanceDescription, completedClass); 
+    };
   };
 };
+
+function loadMoreCards() {
+  for (var i = localStorage.length - 11; i >= 0; i--) {
+    var key = localStorage.key(i);
+    var cardObject = getCardId(key);
+    if (cardObject.completed === 0){
+      var importanceDescription = importanceAdjust(cardObject, key);
+      var completedClass = completedAdjust(cardObject, key);
+      appendCard(cardObject, importanceDescription, completedClass); 
+    };
+  };
+};
+
+
+function showCompletedCards () {
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardObject = getCardId(key);
+    if (cardObject.completed === 1){
+      var importanceDescription = importanceAdjust(cardObject, key);
+      var completedClass = completedAdjust(cardObject, key);
+      prependCard(cardObject, importanceDescription, completedClass);
+    };
+  };
+}
 
 function SetNewToDo(title, task) {
     this.id = (new Date).getTime();
     this.title = title;
     this.task = task;
     this.importance = 2;
+    this.completed = 0;
 }
 
 function createCard(event) {
@@ -36,12 +70,20 @@ function createCard(event) {
   clearForm();
 };
 
-function prependCard (newToDo, importance) {
-  $('.prepend').prepend(`<article id = ${newToDo.id}><button class="todo-delete button"></button>
+function prependCard (newToDo, importance, completed) {
+  $('.prepend').prepend(`<article id = ${newToDo.id} class="${completed}"><button class="todo-delete button"></button>
     <h2 contenteditable="true" class="todo-title">${newToDo.title}</h2>
     <p contenteditable="true" class="todo-task">${newToDo.task}</p>
     <button class="todo-up button"></button><button class="todo-down button"></button>
-    <p class="todo-importance-value">${importance}<p><hr></article>`)
+    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button><hr></article>`)
+}
+
+function appendCard(newToDo, importance, completed) {
+$('.prepend').append(`<article id = ${newToDo.id} class="${completed}"><button class="todo-delete button"></button>
+    <h2 contenteditable="true" class="todo-title">${newToDo.title}</h2>
+    <p contenteditable="true" class="todo-task">${newToDo.task}</p>
+    <button class="todo-up button"></button><button class="todo-down button"></button>
+    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button><hr></article>`)
 }
 
 function enableSaveButton() {
@@ -122,6 +164,15 @@ function downVoteMax(cardObject){
   }
 }
 
+function taskComplete () {
+  $(this).addClass('completed');
+  var key = $(this).parent().attr('id');
+  var cardObject = getCardId(key);
+  cardObject.completed = 1;
+  completedAdjust(cardObject, key);
+  setCardId(key, cardObject);
+}
+
 function importanceAdjust (cardObject, key) {
   var importance = cardObject.importance;
   var arr = importanceSearch(array, importance);
@@ -130,13 +181,21 @@ function importanceAdjust (cardObject, key) {
   return importanceDescription;
 };
 
+function completedAdjust (cardObject, key) {
+  var completed = cardObject.completed;
+  var arr = completedSearch(completedArray, completed);
+  $(`#${key}`).attr('class', arr[0].name);
+  var completedClass = arr[0].name;
+  return completedClass;
+}
+
 function filterCards () {
-  var filter = $('#filter').val();
+  var filter = $('#filter').val().toLowerCase();
   var title = $('.todo-title');
   var task = $('.todo-task');
   for (var i = 0; i < title.length; i++) {
     $(title[i]).parent('article').hide();
-    if ($(title[i]).text().includes(filter) || $(task[i]).text().includes(filter)) {
+    if ($(title[i]).text().toLowerCase().includes(filter) || $(task[i]).text().toLowerCase().includes(filter)) {
       $(title[i]).parent('article').show();
     }
   }
@@ -150,5 +209,11 @@ function importanceSearch (a, q) {
   return arr;
 }
 
-
+function completedSearch (ar, comp) {
+  var arr = $.grep(ar, function(ar){
+    var arr = ar.id === comp;
+    return arr;
+  })
+  return arr;
+}
 

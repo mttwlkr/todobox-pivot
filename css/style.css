@@ -1,3 +1,8 @@
+/*313C3F green-gray*/
+/*1E1E1E dark gray*/
+/*5B5B5B light gray*/
+/*780006 dark red*/
+/*3A3A33 another gray*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -40,7 +45,9 @@ h1 {
   margin-bottom: 1rem;
 }
 
-input {
+input,
+.show-completed,
+.show-more-todo {
   border: 1px solid #939598;
   color: #939598;
   font-size: 2rem;
@@ -56,7 +63,9 @@ input::placeholder {
   font-size: 2rem;
 }
 
-input[type="submit"]{
+#submit,
+.show-completed,
+.show-more-todo{
   background-color: #C30E16;
   border: none;
   color: white;
@@ -66,11 +75,27 @@ input[type="submit"]{
   padding: 0rem;
 }
 
+.show-completed {
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  background-color: #222035;
+}
+
 article {
   color: #222035;
   font-size: 1.2rem;
   width: 100%;
 }
+
+.task-completed {
+  background-color: #D1D2D4;
+}
+
+.task-completed h2,
+.task-completed .todo-task {
+  text-decoration: line-through;
+}
+
 
 h2 {
   color: #5F5C69;
@@ -116,6 +141,31 @@ h2 {
 
 .todo-down:hover {
   background-image:url("../images/downvote-hover.svg");
+}
+
+.complete-button {
+  display: block;
+  border: none;
+  color: #FFFFFF;
+  background-color: #222035;
+  height: 30px;
+  width: 66%;
+  font-size: 1.1em;
+  padding-right: 1.5%;
+  text-align: right;
+  letter-spacing: 0.13em;
+}
+/*780006 darker red*/
+.complete-button:hover {
+  background-color: #575570;
+}
+
+.completed {
+  background-color: #C30E16;
+  margin-left: 22%;
+  width: 78%;
+  text-align: left;
+  padding-left: 2.5%;
 }
 
 hr {
