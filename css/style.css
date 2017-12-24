@@ -11,13 +11,13 @@ body {
 }
 
 div,
-form{
+form {
   width: 60%;
   margin: auto;
 }
 
 .section-top{
-  background-color: #e5f3f2;
+  background-color: #FEF7E3;
   width: 100%;
 }
 
@@ -29,11 +29,11 @@ h1 {
   font-family: "Roboto Slab", serif;
   font-size: 5rem;
   text-align: center;
-  color: #00A79D;
+  color: #C30E16;
 }
 
-h1 .logo-box {
-  color: #6D6E71;
+.logo-box {
+  color: #222035;
 }
 
 #title {
@@ -57,7 +57,7 @@ input::placeholder {
 }
 
 input[type="submit"]{
-  background-color: #00a79d;
+  background-color: #C30E16;
   border: none;
   color: white;
   font-weight: 400;
@@ -67,13 +67,13 @@ input[type="submit"]{
 }
 
 article {
-  color: #939598;
+  color: #222035;
   font-size: 1.2rem;
   width: 100%;
 }
 
 h2 {
-  color: #6D6E71;
+  color: #5F5C69;
   font-family: "Roboto Slab", serif;
   font-size: 2rem;
 }
@@ -106,7 +106,6 @@ h2 {
   margin-bottom: 0;
 }
 
-
 .idea-up:hover {
   background-image:url("../images/upvote-hover.svg");
 }
@@ -137,17 +136,25 @@ h3 {
 
 @media screen and (max-width: 700px) {
   div,
-  form{
+  form {
     width: 90%;
     margin: auto;
-  }
-
-  .section-top { 
-    width: 100%;
   }
 
   h1 {
     font-size: 3rem;
     margin: 0;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  div,
+  form {
+    width: 30%;
+    margin: auto;
+  }  
+  
+  h1 {
+    font-size: 6rem;
   }
 }
