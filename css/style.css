@@ -1,337 +1,153 @@
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 400;
-    font-size: 10px;
-  }
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+}
 
-  /*Top section of page*/
+div,
+form{
+  width: 60%;
+  margin: auto;
+}
 
-  .section-top{
-    background-color: #e5f3f2;
-    display: block;
-    margin: auto;
-    min-width: 330px;
-    text-align: center;
-    width: 100%;
-  }  
+.section-top{
+  background-color: #e5f3f2;
+  width: 100%;
+}
 
-  .container {
-    display: block;
-  }
+#search {
+  margin-top: .75em;
+}
 
-  #form {
-    display: inline-block;
-    width: 60%;
-  }
+h1 {
+  font-family: "Roboto Slab", serif;
+  font-size: 5rem;
+  text-align: center;
+  color: #00A79D;
+}
 
-   #search {
-    display: inline-block;
-    margin-top: .75em;
-    width: 60%;
-  }
+h1 .logo-box {
+  color: #6D6E71;
+}
 
-  h1 {
-    font-family: "Roboto Slab", serif;
-    font-size: 5rem;
-    font-weight: 700;
-    margin: 15px 0 15px 0;
-  }
+#title {
+  margin-bottom: 1rem;
+}
 
-  h1 .logo-idea {
-    color: #00A79D;
-  }
+input {
+  border: 1px solid #939598;
+  color: #939598;
+  font-size: 2rem;
+  font-weight: 600;
+  height: 3rem;
+  margin: .5rem 0 0.5rem 0;
+  padding: 1rem;
+  width: 100%;
+}
 
-  h1 .logo-box {
-    color: #6D6E71;
-  }
+input::placeholder {
+  color: #D1D2D4;
+  font-size: 2rem;
+}
 
-  #title {
-    margin-bottom: 1rem;
-  }
+input[type="submit"]{
+  background-color: #00a79d;
+  border: none;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.2rem;
+  padding: 0rem;
+}
 
+article {
+  color: #939598;
+  font-size: 1.2rem;
+  width: 100%;
+}
 
-  input {
-    border: 1px solid #939598;
-    color: #939598;
-    font-size: 2rem;
-    font-weight: 600;
-    height: 3rem;
-    margin: .5rem 0 0.5rem 0;
-    padding: 1rem;
-    width: 100%;
-  }
+h2 {
+  color: #6D6E71;
+  font-family: "Roboto Slab", serif;
+  font-size: 2rem;
+}
 
-  input::placeholder {
-    color: #D1D2D4;
-    font-size: 2rem;
+.idea-body {
+  margin: 10px 0;
+}
 
-  }
+.button {
+  margin: 0.3rem 1rem 0 0;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  border: none;
+  height: 30px;
+  width: 30px;
+}
 
-  input[type="submit"]{
-    background-color: #00a79d;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    margin-bottom: 1.2rem;
-    padding: 0rem;
-  }
+.idea-delete {
+  float: right;
+  margin-right: 0;
+  background-image: url("../images/delete.svg");
+}
 
-  .section-bottom {
-    background-color: #FFFFFF;
-    display: block;
-    margin: auto;
-    min-width: 330px;
-    text-align: center;
-    width: 100%;
-  }
+.idea-delete:hover {
+  background-image:url("../images/delete-hover.svg");
+}
 
-  article {
-    color: #939598;
-    display: inline-block;
-    font-size: 1.2rem;
-    text-align: left;
-    width: 60%;
-  }
-
-  h2 {
-    color: #6D6E71;
-    display: inline-block;
-    font-family: "Roboto Slab", serif;
-    font-size: 2rem;
-    margin: 0;
-  }
-
-  input[type="image"] {
-    border-style: none;
-    display: inline-block;
-    height: 2rem;
-    margin: 1rem 1rem 0 0;
-    width: 2rem;
-
-  }
-
-  /*input required here for specificty for right margin*/
-  input.idea-delete {
-    bottom: 5px;
-    float: right;
-    margin-right: 0;
-    position: relative;
-  }
-
-  p.idea-body {
-    font-size: 2rem;
-    font-weight: 400;
-    margin: 10px 0;
-
-  }
-
-  .idea-delete {
-    background-image: url("images/delete.svg");
-    background-repeat: no-repeat;
-    border-radius: 20px;
-    border: none;
-    height: 20px;
-    width: 20px;
-  }
-
-  .idea-delete:hover {
-    background-image:url("images/delete-hover.svg");
-    background-repeat: no-repeat;
-  }
-
-  .idea-up {
-    background-image: url("images/upvote.svg");
-    background-repeat: no-repeat;
-    border-radius: 20px;
-    border: none;
-    height: 20px;
-    margin-bottom: 0;
-    width: 20px;
-  }
-
-
-  .idea-up:hover {
-    background-image:url("images/upvote-hover.svg");
-    background-repeat: no-repeat;
-  }
-
-  .idea-down {
-    background-image: url("images/downvote.svg");
-    background-repeat: no-repeat;
-    border-radius: 20px;
-    border: none;
-    height: 20px;
-    width: 20px;
-  }
-
-  .idea-down:hover {
-    background-image:url("images/downvote-hover.svg");
-    background-repeat: no-repeat;
-  }
-
-  .button-box {
-    position: relative;
-  }
-
-  hr {
-    margin: 20px 0;
-  }
-
-  .idea-quality-value {
-    bottom: 10px;
-    display: inline-block;
-    position: relative;
-  }
-
-
-  h3 {
-    display: inline-block;
-    font-size: 1rem;
-    vertical-align: middle;
-  }
-
-
-
-@media screen and (max-width: 720px) {
-  
-
-  h1{
-    font-size: 2.8rem;
-    margin: 10px 0 10px 0;
-  }
-
-  input {
-    font-size: 1rem;
-    height: 2.3rem;
-    margin-bottom: 4px; 
-    padding: 24px 0 14px 10px;
-  }
-
-  input::placeholder { 
-    font-size: 25px;
-  }
-
-  input[type="submit"]{
-    margin-bottom: 12px;
-  }
-
-  #title {
-    margin-bottom: 5px;
-  }
-
-  #search {
-  margin: 15px 0 15px 0;
-
-  }
-
-  #title,
-  #body,
-  #submit,
-  #search {
-    height: 43px;
-  }
-
-  #form,
-  #search,
-  article {
-    min-width: 300px;
-  }
-  p.idea-body { 
-  font-size: 24px;
-   }
-
-  h2.idea-title {
-    font-size: 30px;
-  } 
+.idea-up {
+  background-image: url("../images/upvote.svg");
+  margin-bottom: 0;
 }
 
 
+.idea-up:hover {
+  background-image:url("../images/upvote-hover.svg");
+}
 
+.idea-down {
+  background-image: url("../images/downvote.svg");
+}
 
-@media only screen and (max-width:320px) {
- 
-  .section-top{
-    height: 249px;
-    min-height: 49.5%;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
+.idea-down:hover {
+  background-image:url("../images/downvote-hover.svg");
+}
+
+hr {
+  margin: 20px 0;
+}
+
+.idea-quality-value {
+  bottom: 10px;
+  display: inline-block;
+  position: relative;
+}
+
+h3 {
+  display: inline-block;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 700px) {
+  div,
+  form{
+    width: 90%;
+    margin: auto;
   }
 
-  .section-bottom {
-    margin-top: 280px;
-    z-index: 0;
+  .section-top { 
+    width: 100%;
   }
 
   h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0;
-  }
-
-  p.idea-body { 
-  font-size: 20px;
-   }
-
-  h2.idea-title {
-    font-size: 26px;
-  } 
-
-  input::placeholder {
-    bottom: 60%;
-    font-size: 20px;
-    position: relative;
-  }
-
-  input#body {
-    height: 105px;
-  }
-
-  #search {
-    margin: top;
-  }
-
-  #form,
-  #search,
-  article {
-    min-width: 250px;
-  }
-
-  .idea-delete,
-  .idea-down,
-  .idea-up {
-    width: 10px;
-  }
-
-  #title,
-  #search {
-    height: 30px;
-  }
-
-  #title::placeholder,
-  #search::placeholder {
-    bottom: 50%;
-    font-size: 20px;
-    position: relative;
-  }
-
-   input[type="submit"]{
-    font-size: 20px;
-  }
-
-  #submit::placeholder {
-    bottom:50%;
-    position: relative;
+    font-size: 3rem;
+    margin: 0;
   }
 }
-
-
-

@@ -1,210 +1,148 @@
-/*Global variables*/
-var $inputTitle = $('#title');
-var $inputBody = $('#body');
-var inputFields = ('#title, #body');
-var submitButton = $('#submit');
-var searchInput = $('#search');
-var $titleElement = $('.idea-title');
-var $bodyElement = $('.idea-body');
-var ideaTextElements = ('.idea-title, .idea-body');
-var $ideaQualityElement = $('.idea-quality-value');
-var deleteButton = $('.idea-delete');
-var voteUpButton = $('.idea-up');
-var voteDownButton = $('.idea-down');
-var bottomSection = $('.section-bottom');
-var maxID = '';
-
-/*On load statements*/
-setMaxID();
 loadIdeas();
 $('#title').focus();
-$(submitButton).prop('disabled', true);
-
-/*Event Listeners*/
-
-//Input fields keyup
-$(inputFields).on('keyup', function() {
-  toggleButtonDisabled();
-})
-
-//Save button click
-$(submitButton).on('click', function(event) { 
-  event.preventDefault();
-  prependIdeasToList();
-  $(inputFields).val('');
-});
-
-//Search input keyup
-$(searchInput).on('keyup', function() {
-})
-
-//Click on idea title and body elements
-$(bottomSection).on('click', ideaTextElements, function() {
-  $(this).attr('contenteditable','true');
-  $(this).keypress(function(event) {
-    if(event.which == 13){
-      var itemID = $(this).parent().attr('id');
-      var quality = $(this).parent().attr('quality');
-      if ($(this).hasClass('idea-title')) {
-        var $title = $(this).text();
-        var $body = $(this).siblings('.idea-body').text();
-      } else {
-        var $title = $(this).siblings('.idea-title').text();
-        var $body = $(this).text();
-      }
-      var updatedValues = {
-          id: itemID,
-          title: $title,
-          body: $body,
-          quality: quality
-      }
-      var stringifiedUpdatedIdea = JSON.stringify(updatedValues);
-      localStorage.setItem(itemID, stringifiedUpdatedIdea);
-      $(this).blur();
-    };
-  });
-});
-  
-
-//Delete button click
-$(bottomSection).on('click', '.idea-delete', function () {
-  $(this).parent('article').remove();
-  var key = $(this).parent().attr('id');
-  localStorage.removeItem(key);
-})
-
-//Up vote button click
-$(bottomSection).on('click', '.idea-up', function () {
-  var itemID = $(this).parent().attr('id');
-  var title = $(this).siblings('.idea-title').text();
-  var body = $(this).siblings('.idea-body').text();
-  var quality = $(this).parent().attr('quality');
-  if (quality < 2) {
-    quality = parseInt(quality) + 1;
-    $(this).parent().attr('quality',quality);
-  }
-  if(quality < 1) {
-    $(this).siblings('.idea-quality-value').text('Quality: Swill');
-  } else if (quality == 1) {
-    $(this).siblings('.idea-quality-value').text('Quality: Plausible');
-  } else if (quality > 1) {
-    $(this).siblings('.idea-quality-value').text('Quality: Genius');
-  };
-  var updatedValues = {
-      id: itemID,
-      title: title,
-      body: body,
-      quality: quality
-  }
-  var stringifiedUpdatedIdea = JSON.stringify(updatedValues);
-  localStorage.setItem(itemID, stringifiedUpdatedIdea);
-  $(this).blur();
-});
-
-//Down vote click
-$(bottomSection).on('click', '.idea-down', function () {
-  var itemID = $(this).parent().attr('id');
-  var title = $(this).siblings('.idea-title').text();
-  var body = $(this).siblings('.idea-body').text();
-  var quality = $(this).parent().attr('quality');
-  if (quality > 0){
-  quality = parseInt(quality) - 1;
-  $(this).parent().attr('quality',quality);
-  }
-  if(quality < 1){
-    $(this).siblings('.idea-quality-value').text('Quality: Swill');
-  } else if (quality == 1){
-    $(this).siblings('.idea-quality-value').text('Quality: Plausible');
-  } else if (quality > 1){
-    $(this).siblings('.idea-quality-value').text('Quality: Genius');
-    };
-  var updatedValues = {
-      id: itemID,
-      title: title,
-      body: body,
-      quality: quality
-  }
-  var stringifiedUpdatedIdea = JSON.stringify(updatedValues);
-  localStorage.setItem(itemID, stringifiedUpdatedIdea);
-  $(this).blur();
-});
-
-/*Functions*/
-
-function setMaxID() {
-  for(i=0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var item = JSON.parse(localStorage.getItem(key));
-    var id = item.id;
-    if(id > maxID) {
-      maxID = id; 
-    }
-  }
-}
+$('#form').on('keyup', '#title, #body', toggleButtonDisabled);
+$('#submit').on('click', prependIdeasToList);
+$('.section-bottom').on('blur', '.idea-title', updateTitle); 
+$('.section-bottom').on('blur', '.idea-body', updateBody);
+$('.section-bottom').on('click', '.idea-delete', deleteButton);
+$('.section-bottom').on('click', '.idea-up', upVote);
+$('.section-bottom').on('click', '.idea-down', downVote);
+$('#search').on('keyup', filterCards);
 
 function loadIdeas() {
   for (i=0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
-    var item = JSON.parse(localStorage.getItem(key));
-    var id = item.id;
-    var title = item.title;
-    var body = item.body;
-    var quality = item.quality;
-    if(quality < 1) {
-      var qualityDesc = 'Quality: Swill';
-    } else if (quality == 1) {
-      var qualityDesc = 'Quality: Plausible';
-    } else if (quality > 1) {
-    var qualityDesc = 'Quality: Genius';
-    };
-      $('.prepend').prepend(`
-        <article id = "${id}" quality = "${quality}">
-             <h2 class="idea-title">${title}</h2>
-             <input type="image" src="images/delete.svg" class="idea-delete" value="X">
-             <p class="idea-body">${body}</p>
-             <input type="image" src="images/upvote.svg" class="idea-up">
-             <input type="image" src="images/downvote.svg" class="idea-down">
-             <p class="idea-quality-value">${qualityDesc}</p>
-            <hr>
-        </article>`);
+    var item = getCardId(key);
+    prependCard(item, qualityDesc);
+    var qualityDesc = qualityAdjust(item, key);
   };
 };
 
+function SetNewIdea(title, body) {
+    this.id = (new Date).getTime();
+    this.title = title;
+    this.body = body;
+    this.quality = 0;
+}
+
+function prependIdeasToList(event) {
+  event.preventDefault();
+  var newIdea = new SetNewIdea($('#title').val(), $('#body').val());
+  prependCard(newIdea, 'Quality: Swill');
+  setCardId(newIdea.id, newIdea);
+  clearForm();
+};
+
+function prependCard (newIdea, quality) {
+  $('.prepend').prepend(`<article id = ${newIdea.id}><button class="idea-delete button"></button>
+    <h2 contenteditable="true" class="idea-title">${newIdea.title}</h2>
+    <p contenteditable="true" class="idea-body">${newIdea.body}</p>
+    <button class="idea-up button"></button><button class="idea-down button"></button>
+    <p class="idea-quality-value">${quality}<p><hr></article>`)
+}
+
 function toggleButtonDisabled() {
-  if($('#title').val() && $('#body').val()) {
-    $(submitButton).prop('disabled', false);
-  } else {
-    $(submitButton).prop('disabled', true);
-  }
+  if($('#title').val() !== '' && $('#body').val() !== '') {
+    $('#submit').prop('disabled', false);
+  } 
 };
 
-function prependIdeasToList() {
-  var titleInput = $('#title').val();
-  var bodyInput = $('#body').val();
-  setMaxID();
-  maxID++;
-  setNewIdea();
-  $('.prepend').prepend(`
-    <article id = ${maxID} quality = "0">
-        <h2 class="idea-title">${titleInput}</h2>
-        <input type="image" src="images/delete.svg" class="idea-delete" value="X">
-        <p class="idea-body">${bodyInput}</p>
-        <input type="image" src="images/upvote.svg" class="idea-up">
-        <input type="image" src="images/downvote.svg" class="idea-down">
-        <p class="idea-quality-value">Quality: Swill<p>
-        <hr>
-    </article>`)
+function clearForm () {
   $('#title').focus();
+  $('#submit').prop('disabled', true)
+  $('#title, #body').val('');
+}
+
+function getCardId (key) {
+  var storedCard = localStorage.getItem(key);
+  var item = JSON.parse(storedCard);
+  return item;
+}
+
+function setCardId (key, newIdea) {
+  var stringifiedNewIdeaObject = JSON.stringify(newIdea);
+  localStorage.setItem(key, stringifiedNewIdeaObject);
+}
+
+function updateTitle() {
+  var key = $(this).parent().attr('id');
+  var item = getCardId(key);
+  item.title = $(this).text();
+  setCardId(key, item);
 };
 
-function setNewIdea() {
-  var newIdeaObject = {
-    id: maxID,
-    title: $inputTitle.val(),
-    body: $inputBody.val(),
-    quality: 0
-  }
-  var stringifiedNewIdeaObject = JSON.stringify(newIdeaObject);
-  localStorage.setItem(maxID, stringifiedNewIdeaObject);
-  localStorage.getItem(maxID);
+function updateBody() {
+  var key = $(this).parent().attr('id');
+  console.log($(this));
+  var item = getCardId(key); 
+  item.body = $(this).text();
+  setCardId(key, item);
+}
+
+function deleteButton() {
+  $(this).parent('article').remove();
+  var key = $(this).parent().attr('id');
+  localStorage.removeItem(key);
 };
+
+function upVote () {
+  var key = $(this).parent().attr('id');
+  var item = getCardId(key);
+  item.quality = upVoteMax(item);
+  qualityAdjust(item, key);
+  setCardId(key, item);
+};
+
+function upVoteMax (item) {
+  if (item.quality < 2) {
+    item.quality++;
+    return item.quality;
+  }else if (item.quality === 2){
+    return item.quality;
+  }
+}
+
+function downVote () {
+  var key = $(this).parent().attr('id');
+  var item = getCardId(key);
+  item.quality = downVoteMax(item);
+  qualityAdjust(item, key);
+  setCardId(key, item);
+};
+
+function downVoteMax(item){
+  if(item.quality > 0){
+    item.quality--;
+    return item.quality;
+  }else if(item.quality === 0){
+    return item.quality;
+  }
+}
+
+function qualityAdjust (item, key) {
+  if(item.quality < 1){
+    $(`#${key}`).children('.idea-quality-value').text('Quality: Swill');
+  } else if (item.quality == 1){
+    $(`#${key}`).children('.idea-quality-value').text('Quality: Plausible');
+  } else if (item.quality > 1){
+    $(`#${key}`).children('.idea-quality-value').text('Quality: Genius');
+  };
+  var qualityDesc = $(`#${key}`).children('.idea-quality-value').text();
+  return qualityDesc;
+};
+
+function filterCards () {
+  var filter = $('#search').val();
+  var title = $('.idea-title');
+  var body = $('.idea-body');
+  for (var i = 0; i < title.length; i++) {
+    $(title[i]).parent('article').hide();
+    if ($(title[i]).text().includes(filter) || $(body[i]).text().includes(filter)) {
+      $(title[i]).parent('article').show();
+    }
+  }
+}
+
+
+
+
