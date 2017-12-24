@@ -21,7 +21,7 @@ form {
   width: 100%;
 }
 
-#search {
+#filter {
   margin-top: .75em;
 }
 
@@ -78,7 +78,7 @@ h2 {
   font-size: 2rem;
 }
 
-.idea-body {
+.todo-task {
   margin: 10px 0;
 }
 
@@ -91,30 +91,30 @@ h2 {
   width: 30px;
 }
 
-.idea-delete {
+.todo-delete {
   float: right;
   margin-right: 0;
   background-image: url("../images/delete.svg");
 }
 
-.idea-delete:hover {
+.todo-delete:hover {
   background-image:url("../images/delete-hover.svg");
 }
 
-.idea-up {
+.todo-up {
   background-image: url("../images/upvote.svg");
   margin-bottom: 0;
 }
 
-.idea-up:hover {
+.todo-up:hover {
   background-image:url("../images/upvote-hover.svg");
 }
 
-.idea-down {
+.todo-down {
   background-image: url("../images/downvote.svg");
 }
 
-.idea-down:hover {
+.todo-down:hover {
   background-image:url("../images/downvote-hover.svg");
 }
 
@@ -122,7 +122,7 @@ hr {
   margin: 20px 0;
 }
 
-.idea-quality-value {
+.todo-importance-value {
   bottom: 10px;
   display: inline-block;
   position: relative;
