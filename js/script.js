@@ -9,6 +9,8 @@ if (localStorage.length < 10) {
   pageLoadCard(localStorage.length - 10);  
 };
 
+pageLoadPastDueCards();
+
 $('#title').focus();
 $('#form').on('keyup', '#title, #task', enableSaveButton);
 $('#submit').on('click', createCard);
@@ -23,6 +25,19 @@ $('.show-more-todo').on('click', loadMoreCards);
 $('#filter').on('keyup', filterCards);
 $('.complete-button').on('click', completedTextSwitch)
 $('fieldset').on('change', '#critical, #high, #normal, #low, #none', sortByImportance);
+$('#title').on('keyup', titleCount);
+$('#task').on('keyup', taskCount);
+
+
+function titleCount() {
+  var numOfTitleCharacters = ($('#title').val().length);
+  $('.title-count').text(numOfTitleCharacters); 
+}
+
+function taskCount() {
+  var numOfTaskCharacters = ($('#task').val().length);
+  $('.task-count').text(numOfTaskCharacters);
+}
 
 function sortByImportance() {
   var filterArr = $("input[type='checkbox']");
@@ -52,13 +67,42 @@ function pageLoadCard(index) {
   for (var i = index; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
-    if (cardObject.completed === 0) {
+    var timeInStorage = whatTimeIsIt(cardObject);
+    if (cardObject.completed === 0 && timeInStorage === true) {
       var importanceDescription = importanceAdjust(cardObject, key);
       var completedClass = completedAdjust(cardObject, key);
       prependCard(cardObject, importanceDescription, completedClass); 
     };
   };
 };
+
+function pageLoadPastDueCards() {
+    for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardObject = getCardId(key);
+    var timeInStorage = whatTimeIsIt(cardObject);
+    if (cardObject.completed === 0 && timeInStorage === false) {
+      var importanceDescription = importanceAdjust(cardObject, key);
+      var completedClass = completedAdjust(cardObject, key);
+      prependCard(cardObject, importanceDescription, completedClass); 
+    };
+  };  
+}
+
+function whatTimeIsIt (cardObject) {
+  var now = moment();
+  var time = cardObject.time;
+  console.log(time);
+  if (time > now) {
+
+    timeInStorage = true;
+    return timeInStorage;
+  } else {
+// FIGURE OUT HOW TO PARSE DATE    console.log(time - now);
+    timeInStorage = false;
+    return timeInStorage;
+  }
+}
 
 function loadMoreCards() {
   for (var i = localStorage.length - 11; i >= 0; i--) {
@@ -93,17 +137,18 @@ function updatesCardButtons(key) {
   $(`#${key}`).children('.todo-up, .todo-down').prop('disabled', true);  
 }
 
-function SetNewToDo(title, task) {
+function SetNewToDo(title, task, date, time) {
   this.id = (new Date).getTime();
   this.title = title;
   this.task = task;
   this.importance = 2;
   this.completed = 0;
+  this.time = date +" "+ time;
 }
 
 function createCard(event) {
   event.preventDefault();
-  var newToDo = new SetNewToDo($('#title').val(), $('#task').val());
+  var newToDo = new SetNewToDo($('#title').val(), $('#task').val(), $('#due-date').val(), $('#due-time').val());
   prependCard(newToDo, 'Importance: Normal');
   setCardId(newToDo.id, newToDo);
   clearForm();
@@ -114,7 +159,8 @@ function prependCard (newToDo, importance, completed) {
     <h2 contenteditable="true" class="todo-title">${newToDo.title}</h2>
     <p contenteditable="true" class="todo-task">${newToDo.task}</p>
     <button class="todo-up button"></button><button class="todo-down button"></button>
-    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button></article>`)
+    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button>
+    <label>2Due Date: </label><time class="due-date" datetime="${newToDo.time}">${newToDo.time}</time></article>`)
 }
 
 function appendCard(newToDo, importance, completed) {
@@ -122,11 +168,12 @@ $('.prepend').append(`<article id=${newToDo.id} class="${completed} parent-artic
     <h2 contenteditable="true" class="todo-title">${newToDo.title}</h2>
     <p contenteditable="true" class="todo-task">${newToDo.task}</p>
     <button class="todo-up button"></button><button class="todo-down button"></button>
-    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button></article>`)
+    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button>
+    <label>2Due Date: </label><time class="due-date" datetime="${newToDo.time}">${newToDo.time}</time></article>`)
 }
 
 function enableSaveButton() {
-  if($('#title').val() !== '' && $('#task').val() !== '') {
+  if ($('#title').val() !== '' && $('#task').val() !== '' && $('#task').val().length < 120 && $('#title').val().length < 120 ) {
     $('#submit').prop('disabled', false);
   } 
 };
