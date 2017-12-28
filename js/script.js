@@ -1,9 +1,14 @@
 var array = [{id:4, name: 'Importance: Critical'},{id:3, name: 'Importance: High'},
   {id:2, name: 'Importance: Normal'},{id:1, name: 'Importance: Low'},{id:0, name: 'Importance: None'}];
 
-var completedArray = [{id:0, name: 'task-incomplete'}, {id: 1, name:'task-completed'}]
+var completedArray = [{id:0, name: 'task-incomplete'}, {id: 1, name:'task-completed parent-article'}]
 
-pageLoadCard();
+if (localStorage.length < 10) {
+  pageLoadCard(0)
+} else {
+  pageLoadCard(localStorage.length - 10);  
+};
+
 $('#title').focus();
 $('#form').on('keyup', '#title, #task', enableSaveButton);
 $('#submit').on('click', createCard);
@@ -16,12 +21,13 @@ $('.section-bottom').on('click', '.complete-button', taskComplete);
 $('.show-completed').on('click', showCompletedCards);
 $('.show-more-todo').on('click', loadMoreCards);
 $('#filter').on('keyup', filterCards);
+$('.complete-button').on('click', completedTextSwitch)
 
-function pageLoadCard() {
-  for (var i = localStorage.length - 10; i < localStorage.length; i++) {
+function pageLoadCard(index) {
+  for (var i = index; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
-    if (cardObject.completed === 0){
+    if (cardObject.completed === 0) {
       var importanceDescription = importanceAdjust(cardObject, key);
       var completedClass = completedAdjust(cardObject, key);
       prependCard(cardObject, importanceDescription, completedClass); 
@@ -33,14 +39,13 @@ function loadMoreCards() {
   for (var i = localStorage.length - 11; i >= 0; i--) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
-    if (cardObject.completed === 0){
+    if (cardObject.completed === 0) {
       var importanceDescription = importanceAdjust(cardObject, key);
       var completedClass = completedAdjust(cardObject, key);
       appendCard(cardObject, importanceDescription, completedClass); 
     };
   };
 };
-
 
 function showCompletedCards () {
   for (var i = 0; i < localStorage.length; i++) {
@@ -50,16 +55,23 @@ function showCompletedCards () {
       var importanceDescription = importanceAdjust(cardObject, key);
       var completedClass = completedAdjust(cardObject, key);
       prependCard(cardObject, importanceDescription, completedClass);
+      updatesCardButtons(key);
     };
   };
 }
 
+function updatesCardButtons(key) {
+  $(`#${key}`).children('.complete-button').addClass('completed');
+  $(`#${key}`).children('.complete-button').text('Task Completed');
+  $(`#${key}`).children('.todo-up, .todo-down').prop('disabled', true);  
+}
+
 function SetNewToDo(title, task) {
-    this.id = (new Date).getTime();
-    this.title = title;
-    this.task = task;
-    this.importance = 2;
-    this.completed = 0;
+  this.id = (new Date).getTime();
+  this.title = title;
+  this.task = task;
+  this.importance = 2;
+  this.completed = 0;
 }
 
 function createCard(event) {
@@ -71,19 +83,19 @@ function createCard(event) {
 };
 
 function prependCard (newToDo, importance, completed) {
-  $('.prepend').prepend(`<article id = ${newToDo.id} class="${completed}"><button class="todo-delete button"></button>
+  $('.prepend').prepend(`<article id=${newToDo.id} class="${completed} parent-article"><button class="todo-delete button"></button>
     <h2 contenteditable="true" class="todo-title">${newToDo.title}</h2>
     <p contenteditable="true" class="todo-task">${newToDo.task}</p>
     <button class="todo-up button"></button><button class="todo-down button"></button>
-    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button><hr></article>`)
+    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button></article>`)
 }
 
 function appendCard(newToDo, importance, completed) {
-$('.prepend').append(`<article id = ${newToDo.id} class="${completed}"><button class="todo-delete button"></button>
+$('.prepend').append(`<article id=${newToDo.id} class="${completed} parent-article"><button class="todo-delete button"></button>
     <h2 contenteditable="true" class="todo-title">${newToDo.title}</h2>
     <p contenteditable="true" class="todo-task">${newToDo.task}</p>
     <button class="todo-up button"></button><button class="todo-down button"></button>
-    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button><hr></article>`)
+    <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button></article>`)
 }
 
 function enableSaveButton() {
@@ -118,7 +130,6 @@ function updateTitle() {
 
 function updateTask() {
   var key = $(this).parent().attr('id');
-  console.log($(this));
   var cardObject = getCardId(key); 
   cardObject.task = $(this).text();
   setCardId(key, cardObject);
@@ -168,6 +179,7 @@ function taskComplete () {
   $(this).addClass('completed');
   var key = $(this).parent().attr('id');
   var cardObject = getCardId(key);
+  cardObject.importance = 0;
   cardObject.completed = 1;
   completedAdjust(cardObject, key);
   setCardId(key, cardObject);
@@ -215,5 +227,9 @@ function completedSearch (ar, comp) {
     return arr;
   })
   return arr;
+}
+
+function completedTextSwitch() {
+  $(this).text("Task Completed");
 }
 

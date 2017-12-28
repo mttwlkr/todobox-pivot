@@ -1,8 +1,16 @@
-/*313C3F green-gray*/
-/*1E1E1E dark gray*/
-/*5B5B5B light gray*/
-/*780006 dark red*/
-/*3A3A33 another gray*/
+/*
+
+#e36189; Pink;
+#da6592; Darker Pink;
+#22294b; Light Purple;
+#1f2446; Dark Purple;
+#5fdbc8; Light Green;
+#7cd7fe; Light Blue;
+#fda47e; Light Orange;
+#FCFCF6; White;
+
+*/
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -22,7 +30,7 @@ form {
 }
 
 .section-top{
-  background-color: #FEF7E3;
+  background-color: #1f2446;
   width: 100%;
 }
 
@@ -34,11 +42,11 @@ h1 {
   font-family: "Roboto Slab", serif;
   font-size: 5rem;
   text-align: center;
-  color: #C30E16;
+  color: #e36189;
 }
 
 .logo-box {
-  color: #222035;
+  color: #5fdbc8;
 }
 
 #title {
@@ -66,7 +74,7 @@ input::placeholder {
 #submit,
 .show-completed,
 .show-more-todo{
-  background-color: #C30E16;
+  background-color: #e36189;
   border: none;
   color: white;
   font-weight: 400;
@@ -78,22 +86,13 @@ input::placeholder {
 .show-completed {
   font-size: 1.5rem;
   letter-spacing: 0.2rem;
-  background-color: #222035;
+  background-color: #1f2446;
 }
 
 article {
   color: #222035;
   font-size: 1.2rem;
   width: 100%;
-}
-
-.task-completed {
-  background-color: #D1D2D4;
-}
-
-.task-completed h2,
-.task-completed .todo-task {
-  text-decoration: line-through;
 }
 
 
@@ -143,27 +142,45 @@ h2 {
   background-image:url("../images/downvote-hover.svg");
 }
 
+.parent-article {
+  padding: 9px 16px 23px;
+  margin-bottom: 5%;
+  border-bottom: 1px solid black;
+}
+
 .complete-button {
   display: block;
   border: none;
   color: #FFFFFF;
-  background-color: #222035;
+  background-color: #1f2446;
   height: 30px;
-  width: 66%;
+  width: 303px;
   font-size: 1.1em;
-  padding-right: 1.5%;
   text-align: right;
   letter-spacing: 0.13em;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 40px;
+  margin-top: 10px;
+  padding-right: 18px;
+  line-height: 1.4em;
+  margin-left: -15px;
 }
-/*780006 darker red*/
-.complete-button:hover {
-  background-color: #575570;
+
+.task-completed {
+  background: linear-gradient(to bottom right, #e36189, #5FDBC8);
+}
+
+.task-completed h2,
+.task-completed .todo-task {
+  text-decoration: line-through;
 }
 
 .completed {
-  background-color: #C30E16;
+  background-color: #5fdbc8;
+  border-radius: 1em 0 0 1em;
   margin-left: 22%;
-  width: 78%;
+  width: 79.9%;
   text-align: left;
   padding-left: 2.5%;
 }
@@ -184,6 +201,12 @@ h3 {
   vertical-align: middle;
 }
 
+.show-more-todo {
+  margin-bottom: -1%;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+}
+
 @media screen and (max-width: 700px) {
   div,
   form {
@@ -195,6 +218,36 @@ h3 {
     font-size: 3rem;
     margin: 0;
   }
+  
+  .complete-button {
+  line-height: 1.5em;
+  margin-left: -15px;
+  width: 300px;
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;
+  }
+
+  .show-more-todo {
+  margin-bottom: -1%;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  }
+
+  .completed {
+  margin-left: 22%;
+  width: 79.9%;
+  padding-left: 2.5%;
+  border-radius: 1em 0 0 1em;
+  }
+
+}
+
+@media screen and (max-width: 350px) {
+ 
+ .complete-button {
+  width: 209px;
+ }
+
 }
 
 @media screen and (min-width: 1400px) {
@@ -207,4 +260,12 @@ h3 {
   h1 {
     font-size: 6rem;
   }
+
+  .completed {
+    margin-left: 22%;
+    width: 80.1%;
+    padding-left: 2.5%;
+    border-radius: 1em 0 0 1em;
+  }
+
 }
