@@ -18,6 +18,29 @@
     </section>
     <section class="section-bottom" role="main">
       <div class="filter-bar">
+        <fieldset>
+          <legend>Sort by Importance</legend>
+          <div class="checkbox-div">
+            <label for = "critical">Critical</label>
+            <input type="checkbox" value="critical" id="critical" name="importance">
+          </div>
+          <div class="checkbox-div">
+            <label for = "high">High</label>
+            <input type="checkbox" value="high" id="high" name="importance">
+          </div>
+          <div class="checkbox-div">
+            <label for = "normal">Normal</label>
+            <input type="checkbox" value="normal" id="normal" name="importance">
+          </div>
+          <div class="checkbox-div">
+            <label for = "low">Low</label>
+            <input type="checkbox" value="low" id="low" name="importance">
+          </div>
+          <div class="checkbox-div">
+            <label for = "none">None</label>
+            <input type="checkbox" value="none" id="none" name="importance">
+          </div>
+        </fieldset>
         <input id="filter" type="text" placeholder="Filter" aria-label="Filter field">
         <button class="show-completed">Show Completed 2Dos</button>
       </div>

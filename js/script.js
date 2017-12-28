@@ -22,6 +22,31 @@ $('.show-completed').on('click', showCompletedCards);
 $('.show-more-todo').on('click', loadMoreCards);
 $('#filter').on('keyup', filterCards);
 $('.complete-button').on('click', completedTextSwitch)
+$('fieldset').on('change', '#critical, #high, #normal, #low, #none', sortByImportance);
+
+function sortByImportance() {
+  var filterArr = $("input[type='checkbox']");
+  var importance = $('.todo-importance-value');
+  var checkedBoxesArr = filterArr.filter(function(array){
+    return this.checked;
+  })
+  filterByImportance(checkedBoxesArr, importance)
+};
+
+function filterByImportance(boxesChecked, importance) {
+  if (boxesChecked.length > 0) {
+    for (var i = 0; i < importance.length; i++) {
+      $(importance[i]).parent('article').hide();
+      for (var j = 0; j < boxesChecked.length; j++) {
+        if ($(importance[i]).text().toLowerCase().includes(boxesChecked[j].value)) {
+          $(importance[i]).parent('article').show();
+        }
+      }
+    }
+  } else {
+    $(importance).parent('article').show();
+  }
+}
 
 function pageLoadCard(index) {
   for (var i = index; i < localStorage.length; i++) {

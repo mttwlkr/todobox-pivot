@@ -83,6 +83,12 @@ input::placeholder {
   padding: 0rem;
 }
 
+.checkbox-div {
+  display: inline-block;
+  padding: 0 8%;
+  width: 19%;
+}
+
 .show-completed {
   font-size: 1.5rem;
   letter-spacing: 0.2rem;
