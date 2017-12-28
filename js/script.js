@@ -44,6 +44,7 @@ function loadMoreCards() {
       var completedClass = completedAdjust(cardObject, key);
       appendCard(cardObject, importanceDescription, completedClass); 
     };
+    $('.show-more-todo').attr('disabled', true);
   };
 };
 
@@ -57,6 +58,7 @@ function showCompletedCards () {
       prependCard(cardObject, importanceDescription, completedClass);
       updatesCardButtons(key);
     };
+    $('.show-completed').attr('disabled', true);
   };
 }
 
