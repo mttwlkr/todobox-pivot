@@ -11,10 +11,10 @@
     <section class="section-top">
       <form id="form" role="form">
         <h1>2Do<span class="logo-box">Box</span></h1>
-        <input id="title" type="text" placeholder="Title" aria-label="to do title"><span class="character-count title-count"></span>
-        <input id="task" type="textarea" placeholder="Task" aria-label="to do task"><span class="character-count task-count"></span>
-        <label for="due-date">2Due Date</label><input id="due-date" type="date">
-        <label for="due-time">2Due Time</label><input id="due-time" type="time">
+        <div class="input-div character-count"><span class="title-count"></span></div><input class="header-input" id="title" type="text" placeholder="Title" aria-label="to do title">
+        <div class="input-div character-count"><span class="task-count"></span></div><input class="header-input" id="task" type="textarea" placeholder="Task" aria-label="to do task">
+        <div class="input-div"><label for="due-date">2Due Date</label></div><input class="header-input" id="due-date" type="date">
+        <div class="input-div"><label for="due-time">2Due Time</label></div><input class="header-input" id="due-time" type="time">
         <input type="submit" id="submit" class="enable-button" value="save" disabled="true" aria-label="save to do">
       </form>
     </section>

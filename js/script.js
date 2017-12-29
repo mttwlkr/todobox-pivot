@@ -35,7 +35,7 @@ function pageLoadCard(index) {
 };
 
 function pageLoadPastDueCards() {
-    for (var i = 0; i < localStorage.length; i++) {
+  for (var i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
     var timeInStorage = whatTimeIsIt(cardObject);
@@ -51,7 +51,8 @@ function loadMoreCards() {
   for (var i = localStorage.length - 11; i >= 0; i--) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
-    if (cardObject.completed === 0) {
+    var timeInStorage = whatTimeIsIt(cardObject);
+    if (cardObject.completed === 0 && timeInStorage === true) {
       cardAppendAdjust(cardObject, key);
     };
     $('.show-more-todo').attr('disabled', true);
@@ -150,11 +151,17 @@ function clearForm () {
 function titleCount() {
   var numOfTitleCharacters = ($('#title').val().length);
   $('.title-count').text(numOfTitleCharacters); 
+  if (numOfTitleCharacters > 120) {
+    $('.title-count').addClass('character-limit');
+  }
 };
 
 function taskCount() {
   var numOfTaskCharacters = ($('#task').val().length);
   $('.task-count').text(numOfTaskCharacters);
+  if (numOfTaskCharacters > 120) {
+    $('.task-count').addClass('character-limit');
+  }
 };
 
 function enableSaveButton() {
@@ -242,7 +249,7 @@ function resumeTask () {
   $(this).removeClass('completed') && $(this).text("Complete Task");
   var key = $(this).parent().attr('id');
   var cardObject = getCardId(key);
-  cardObject.importance = 2;
+  cardObject.importance = 2
   cardObject.completed = 0;
   adjustAndStore(cardObject, key);
   $(`#${key}`).children('.todo-up, .todo-down').prop('disabled', false);  
