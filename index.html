@@ -11,8 +11,10 @@
     <section class="section-top">
       <form id="form" role="form">
         <h1>2Do<span class="logo-box">Box</span></h1>
-        <input id="title" type="text" placeholder="Title" aria-label="to do title">
-        <input id="task" type="textarea" placeholder="Task" aria-label="to do task">
+        <input id="title" type="text" placeholder="Title" aria-label="to do title"><span class="character-count title-count"></span>
+        <input id="task" type="textarea" placeholder="Task" aria-label="to do task"><span class="character-count task-count"></span>
+        <label for="due-date">2Due Date</label><input id="due-date" type="date">
+        <label for="due-time">2Due Time</label><input id="due-time" type="time">
         <input type="submit" id="submit" class="enable-button" value="save" disabled="true" aria-label="save to do">
       </form>
     </section>
@@ -49,6 +51,10 @@
         <button id="show-more" class="show-more-todo">Show more 2Dos...</button>
       </div>
     </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="time-zone/node_modules/moment/moment.js"></script>
+    <script type="text/javascript" src="time-zone/node_modules/moment-timezone/moment-timezone.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
   </body>
