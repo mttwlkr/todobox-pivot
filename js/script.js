@@ -1,7 +1,7 @@
 var array = [{id:4, name: 'Importance: Critical'},{id:3, name: 'Importance: High'},
   {id:2, name: 'Importance: Normal'},{id:1, name: 'Importance: Low'},{id:0, name: 'Importance: None'}];
 
-var completedArray = [{id:0, name: 'task-incomplete'}, {id: 1, name:'task-completed parent-article'}]
+var completedArray = [{id:0, name: 'task-incomplete parent-article'}, {id: 1, name:'task-completed parent-article'}]
 
 if (localStorage.length < 10) {
   pageLoadCard(0)
@@ -20,10 +20,10 @@ $('.section-bottom').on('click', '.todo-delete', deleteButton);
 $('.section-bottom').on('click', '.todo-up', upVote);
 $('.section-bottom').on('click', '.todo-down', downVote);
 $('.section-bottom').on('click', '.complete-button', taskComplete);
+$('.section-bottom').on('click', '.completed', resumeTask);
 $('.show-completed').on('click', showCompletedCards);
 $('.show-more-todo').on('click', loadMoreCards);
 $('#filter').on('keyup', filterCards);
-$('.complete-button').on('click', completedTextSwitch)
 $('fieldset').on('change', '#critical, #high, #normal, #low, #none', sortByImportance);
 $('#title').on('keyup', titleCount);
 $('#task').on('keyup', taskCount);
@@ -82,19 +82,23 @@ function pageLoadPastDueCards() {
     var cardObject = getCardId(key);
     var timeInStorage = whatTimeIsIt(cardObject);
     if (cardObject.completed === 0 && timeInStorage === false) {
+      cardObject.importance = 4;
       var importanceDescription = importanceAdjust(cardObject, key);
       var completedClass = completedAdjust(cardObject, key);
-      prependCard(cardObject, importanceDescription, completedClass); 
+      prependCard(cardObject, importanceDescription, completedClass);
+      $(`#${key}`).addClass('past-due');
     };
   };  
 }
 
 function whatTimeIsIt (cardObject) {
   var now = moment();
-  var time = cardObject.time;
-  console.log(time);
-  if (time > now) {
-
+  var time = moment(cardObject.time);
+  console.log(time._i);
+  if (time._i === ' ') {
+    timeInStorage = true;
+    return timeInStorage;
+  }else if (now.isBefore(time)) {
     timeInStorage = true;
     return timeInStorage;
   } else {
@@ -143,13 +147,14 @@ function SetNewToDo(title, task, date, time) {
   this.task = task;
   this.importance = 2;
   this.completed = 0;
-  this.time = date +" "+ time;
+  this.time = date+ ' ' + time;
 }
 
 function createCard(event) {
   event.preventDefault();
   var newToDo = new SetNewToDo($('#title').val(), $('#task').val(), $('#due-date').val(), $('#due-time').val());
-  prependCard(newToDo, 'Importance: Normal');
+  var completedClass = completedAdjust(cardObject, key);
+  prependCard(newToDo, 'Importance: Normal', completedClass);
   setCardId(newToDo.id, newToDo);
   clearForm();
 };
@@ -160,7 +165,7 @@ function prependCard (newToDo, importance, completed) {
     <p contenteditable="true" class="todo-task">${newToDo.task}</p>
     <button class="todo-up button"></button><button class="todo-down button"></button>
     <p class="todo-importance-value">${importance}</p><button class="complete-button">Complete Task</button>
-    <label>2Due Date: </label><time class="due-date" datetime="${newToDo.time}">${newToDo.time}</time></article>`)
+    <label>2Due Date: </label><time class="due-date" datetime="${newToDo.time}" contenteditable="true">${newToDo.time}</time></article>`)
 }
 
 function appendCard(newToDo, importance, completed) {
@@ -257,6 +262,18 @@ function taskComplete () {
   cardObject.completed = 1;
   completedAdjust(cardObject, key);
   setCardId(key, cardObject);
+  $(this).text("Task Completed");
+}
+
+function resumeTask () {
+  $(this).removeClass('completed');
+  var key = $(this).parent().attr('id');
+  var cardObject = getCardId(key);
+  cardObject.importance = 2;
+  cardObject.completed = 0;
+  completedAdjust(cardObject, key);
+  setCardId(key, cardObject);
+  $(this).text("Complete Task");
 }
 
 function importanceAdjust (cardObject, key) {
@@ -303,7 +320,4 @@ function completedSearch (ar, comp) {
   return arr;
 }
 
-function completedTextSwitch() {
-  $(this).text("Task Completed");
-}
 
