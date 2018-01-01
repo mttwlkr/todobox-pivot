@@ -53,7 +53,7 @@ input::placeholder {
 }
 
 #title {
-  margin-bottom: 1rem;
+  margin-bottom: .7rem;
 }
 
 #submit,
@@ -83,7 +83,7 @@ input::placeholder {
 
 .header-input {
   vertical-align: top;
-  width: 80%;
+  width: 79%;
 }
 
 .character-limit {
