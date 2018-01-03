@@ -1,7 +1,8 @@
 if (localStorage.length < 10) {
-  pageLoadCard(0)
+  pageLoadCard(0);
+  $('#show-more').css('display', 'none'); 
 } else {
-  pageLoadCard(localStorage.length - 10);  
+  pageLoadCard(localStorage.length - 10);
 };
 
 pageLoadPastDueCards();
@@ -60,6 +61,7 @@ function loadMoreCards() {
 };
 
 function showCompletedCards () {
+  $('.task-completed').remove();
   for (var i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardObject = getCardId(key);
@@ -149,6 +151,7 @@ function clearForm () {
 };
 
 function titleCount() {
+  $('.task-count').text('0/120');
   var numOfTitleCharacters = ($('#title').val().length);
   $('.title-count').text(numOfTitleCharacters + '/120'); 
   updateCharacterCountUI($('.title-count'), numOfTitleCharacters)
