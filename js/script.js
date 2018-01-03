@@ -150,17 +150,21 @@ function clearForm () {
 
 function titleCount() {
   var numOfTitleCharacters = ($('#title').val().length);
-  $('.title-count').text(numOfTitleCharacters); 
-  if (numOfTitleCharacters > 120) {
-    $('.title-count').addClass('character-limit');
-  }
+  $('.title-count').text(numOfTitleCharacters + '/120'); 
+  updateCharacterCountUI($('.title-count'), numOfTitleCharacters)
 };
 
 function taskCount() {
   var numOfTaskCharacters = ($('#task').val().length);
-  $('.task-count').text(numOfTaskCharacters);
-  if (numOfTaskCharacters > 120) {
-    $('.task-count').addClass('character-limit');
+  $('.task-count').text(numOfTaskCharacters + '/120');
+  updateCharacterCountUI($('.task-count'), numOfTaskCharacters);
+};
+
+function updateCharacterCountUI (input, characters){
+  if (characters > 120) {
+    input.addClass('character-limit');
+  }else {
+    input.removeClass('character-limit');
   }
 };
 
