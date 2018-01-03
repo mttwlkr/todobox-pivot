@@ -261,20 +261,20 @@ function adjustAndStore(cardObject, key) {
 };
 
 function importanceAdjust (cardObject, key) {
-  var importance = cardObject.importance;
-  var array = importanceArray();
-  var arr = importanceSearch(array, importance);
-  $(`#${key}`).children('.todo-importance-value').text(arr[0].name);
-  var importanceDescription = arr[0].name;
+  var objectImportance = cardObject.importance;
+  var storedImportanceArray = storeImportanceArray();
+  var importanceArray = importanceSearch(storedImportanceArray, objectImportance);
+  $(`#${key}`).children('.todo-importance-value').text(importanceArray[0].name);
+  var importanceDescription = importanceArray[0].name;
   return importanceDescription;
 };
 
 function completedAdjust (cardObject, key) {
-  var completed = cardObject.completed;
-  var compArr = completedArray();
-  var arr = completedSearch(compArr, completed);
-  $(`#${key}`).attr('class', arr[0].name);
-  var completedClass = arr[0].name;
+  var objectCompleted = cardObject.completed;
+  var completedArray = storeCompletedArray();
+  var completionArray = completedSearch(completedArray, objectCompleted);
+  $(`#${key}`).attr('class', completionArray[0].name);
+  var completedClass = completionArray[0].name;
   return completedClass;
 };
 
@@ -318,31 +318,31 @@ function searchImportance(boxesChecked, importance) {
   }
 };
 
-function importanceSearch (a, q) {
-  var arr = $.grep(a, function(a) {
-    var arr = a.id === q;
-    return arr; 
+function importanceSearch (array, objectImportance) {
+  var importanceArray = $.grep(array, function(object) {
+    var importanceArray = object.id === objectImportance;
+    return importanceArray; 
   }) 
-  return arr;
+  return importanceArray;
 };
 
-function completedSearch (ar, comp) {
-  var arr = $.grep(ar, function(ar){
-    var arr = ar.id === comp;
-    return arr;
+function completedSearch (array, objectCompleted) {
+  var completeArray = $.grep(array, function(object){
+    var completeArray = object.id === objectCompleted;
+    return completeArray;
   })
-  return arr;
+  return completeArray;
 };
 
-function importanceArray() { 
+function storeImportanceArray() { 
   var array = [{id:4, name: 'Importance: Critical'},{id:3, name: 'Importance: High'},
   {id:2, name: 'Importance: Normal'},{id:1, name: 'Importance: Low'},{id:0, name: 'Importance: None'}];
   return array;
 };
 
-function completedArray() {
-  var compArr = [{id:0, name: 'task-incomplete parent-article'}, {id: 1, name:'task-completed parent-article'}];
-  return compArr;
+function storeCompletedArray() {
+  var array = [{id:0, name: 'task-incomplete parent-article'}, {id: 1, name:'task-completed parent-article'}];
+  return array;
 };
 
 
