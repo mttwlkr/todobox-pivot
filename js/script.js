@@ -171,8 +171,6 @@ function storeCompletedArray() {
   return array;
 };
 
-// 
-
 function clearForm () {
   $('#title').focus();
   $('#submit').prop('disabled', true)
@@ -271,8 +269,6 @@ function downVoteMax(cardObject){
   }
 };
 
-//
-
 function taskComplete () {
   $(this).addClass('completed');
   var key = $(this).parent().attr('id');
@@ -315,8 +311,6 @@ function completedAdjust (cardObject, key) {
   var completedClass = completionArray[0].name;
   return completedClass;
 };
-
-// Search/Filter
 
 function filterCards () {
   var filter = $('#filter').val().toLowerCase();
