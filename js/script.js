@@ -144,6 +144,35 @@ function appendCard(newToDo, importance, completed) {
   <label>2Due Date: </label><time class="due-date" datetime="${newToDo.time}">${newToDo.time}</time></article>`)
 };
 
+function importanceSearch (array, objectImportance) {
+  var importanceArray = $.grep(array, function(object) {
+    var importanceArray = object.id === objectImportance;
+    return importanceArray; 
+  }) 
+  return importanceArray;
+};
+
+function completedSearch (array, objectCompleted) {
+  var completeArray = $.grep(array, function(object){
+    var completeArray = object.id === objectCompleted;
+    return completeArray;
+  })
+  return completeArray;
+};
+
+function storeImportanceArray() { 
+  var array = [{id:4, name: 'Importance: Critical'},{id:3, name: 'Importance: High'},
+  {id:2, name: 'Importance: Normal'},{id:1, name: 'Importance: Low'},{id:0, name: 'Importance: None'}];
+  return array;
+};
+
+function storeCompletedArray() {
+  var array = [{id:0, name: 'task-incomplete parent-article'}, {id: 1, name:'task-completed parent-article'}];
+  return array;
+};
+
+// 
+
 function clearForm () {
   $('#title').focus();
   $('#submit').prop('disabled', true)
@@ -242,6 +271,8 @@ function downVoteMax(cardObject){
   }
 };
 
+//
+
 function taskComplete () {
   $(this).addClass('completed');
   var key = $(this).parent().attr('id');
@@ -262,7 +293,7 @@ function resumeTask () {
   $(`#${key}`).children('.todo-up, .todo-down').prop('disabled', false);  
 };
 
-function adjustAndStore(cardObject, key) {
+function adjustAndStore (cardObject, key) {
   completedAdjust(cardObject, key);
   setCardId(key, cardObject);
 };
@@ -284,6 +315,8 @@ function completedAdjust (cardObject, key) {
   var completedClass = completionArray[0].name;
   return completedClass;
 };
+
+// Search/Filter
 
 function filterCards () {
   var filter = $('#filter').val().toLowerCase();
@@ -324,32 +357,3 @@ function searchImportance(boxesChecked, importance) {
     }
   }
 };
-
-function importanceSearch (array, objectImportance) {
-  var importanceArray = $.grep(array, function(object) {
-    var importanceArray = object.id === objectImportance;
-    return importanceArray; 
-  }) 
-  return importanceArray;
-};
-
-function completedSearch (array, objectCompleted) {
-  var completeArray = $.grep(array, function(object){
-    var completeArray = object.id === objectCompleted;
-    return completeArray;
-  })
-  return completeArray;
-};
-
-function storeImportanceArray() { 
-  var array = [{id:4, name: 'Importance: Critical'},{id:3, name: 'Importance: High'},
-  {id:2, name: 'Importance: Normal'},{id:1, name: 'Importance: Low'},{id:0, name: 'Importance: None'}];
-  return array;
-};
-
-function storeCompletedArray() {
-  var array = [{id:0, name: 'task-incomplete parent-article'}, {id: 1, name:'task-completed parent-article'}];
-  return array;
-};
-
-
